@@ -1,5 +1,7 @@
 import React from "react";
 import Item from "./item";
+import "./list.css";
+
 
 export default (props) => {
 
@@ -7,8 +9,8 @@ export default (props) => {
 //listElements is making new array
 
     const listElements = props.data.map((item, index)=>{
-        //console.log("Item: ", item);
-        return <Item key={item._id} title={item.title} delete={props.delete.bind(this, item._id)}/>
+        //console.log("Item in list index: ", item);
+        return <Item key={item._id} complete={item.complete} title={item.title} delete={props.delete.bind(this, item._id)}/>
     });
 
     return (
