@@ -1,5 +1,5 @@
 import React from "react";
-
+import Item from "./item";
 
 export default (props) => {
 
@@ -7,7 +7,8 @@ export default (props) => {
 //listElements is making new array
 
     const listElements = props.data.map((item, index)=>{
-        return <li className="collection-item" key={index}>{item.title}</li>
+        console.log("Item: ", item);
+        return <Item key={item._id} title={item.title}/>
     });
 
     return (
