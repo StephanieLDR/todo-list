@@ -3,7 +3,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import React, { Component } from 'react';
 import List from "./list";
 import AddItem from "./add_item";
-import listData from "../data/list";
+import axios from "axios";
 
 
 class App extends Component {
@@ -12,24 +12,49 @@ class App extends Component {
         this.state= {
             list: []
         };
+
+        this.base_url = "http://api.reactprototypes.com";
+            this.api_key ="?key=ragsdale";
     }
 
     componentDidMount(){
         this.getListData();
     }
 
-    addItem(item) {
-        this.setState({
-            list: [item, ...this.state.list]
-        });
+    async addItem(item) {
+       try {
+           await axios.post(`${this.base_url}/todos${this.api_key}`, item);
+           this.getListData();
+       } catch(error) {
+           console.log("error adding item: ", error.response.data.error)
+       }
+
     }
 
-    getListData() {
+    async getListData() {
         //make call to server to get data eventually
-        this.setState({
-            list: listData,
-        })
-    }
+    //     axios.get(`${this.base_url}/todos${this.api_key}`).then(response => {
+    //         console.log("Get Todos response: ", response.data.todos);
+    //
+    //         this.setState({
+    //             list: response.data.todos
+    //         });
+    //     }).catch(error=> {
+    //         console.log("Get Todos error: ", error.message);
+    //     })
+
+//same as the above but much cleaner, less code
+
+        try {
+            const response = await axios.get(`${this.base_url}/todos${this.api_key}`);
+            this.setState({
+                list: response.data.todos
+            });
+        } catch(error) {
+            console.log("Get data error: ", error.message)
+        }
+
+     }
 
     render(){
         console.log("App state: ", this.state);
