@@ -31,6 +31,14 @@ class App extends Component {
 
     }
 
+    async deleteItem(id){
+
+       // console.log("Delete item with ID: ", id);
+         const response = await axios.delete(`${this.base_url}/todos/${id}${this.api_key}`);
+       // console.log("Delete response: ", response);
+        this.getListData();
+    }
+
     async getListData() {
         //make call to server to get data eventually
     //     axios.get(`${this.base_url}/todos${this.api_key}`).then(response => {
@@ -57,7 +65,7 @@ class App extends Component {
      }
 
     render(){
-        console.log("App state: ", this.state);
+        //console.log("App state: ", this.state);
 
         return (
 
@@ -66,7 +74,7 @@ class App extends Component {
                 <div className="container">
                    <h1 className="center deep-purple accent-1" >To Do List</h1>
                     <AddItem add={this.addItem.bind(this)} />
-                    <List data={this.state.list} />
+                    <List data={this.state.list} delete={this.deleteItem.bind(this)}/>
                 </div>
             </div>
         );
